@@ -1,101 +1,95 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import PostCard from "./components/PostCard";
+import ProjectForm from "./components/ProjectForm";
+import { postData } from "@/api/PostApi";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const queryClient = useQueryClient();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+  // Fetch posts using React Query
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["posts"],
+    queryFn: async () => {
+      const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+      if (!res.ok) throw new Error("Failed to fetch posts");
+      return res.json();
+    },
+  });
+
+  const [posts, setPosts] = useState<any[]>([]);
+  // State for the post that is being edited
+  const [updateData, setUpdateData] = useState<{ id: number; title: string; body: string } | null>(null);
+
+  useEffect(() => {
+    if (data) {
+      setPosts(data);
+    }
+  }, [data]);
+
+  // Function to add a new post
+  const addPostData = async (newPost: { title: string; body: string }) => {
+    try {
+      const res = await postData(newPost);
+      if (res.status === 201) {
+        const uniqueId = posts.length > 0 ? Math.max(...posts.map((p: any) => p.id)) + 1 : 101;
+        const postWithUniqueId = { ...res.data, id: uniqueId };
+        setPosts([postWithUniqueId, ...posts]);
+      }
+    } catch (error) {
+      console.error("Error adding post:", error);
+    }
+  };
+
+  // Function to update an existing post in local state (for edit)
+  const updatePostData = (updatedPost: { title: string; body: string }) => {
+    if (updateData) {
+      setPosts(
+        posts.map((post) =>
+          post.id === updateData.id ? { ...post, title: updatedPost.title, body: updatedPost.body } : post
+        )
+      );
+      setUpdateData(null);
+    }
+  };
+
+  // Handle form submission: if updateData exists, update post; otherwise, add a new post.
+  const handleSubmit = (formData: { title: string; body: string }) => {
+    if (updateData) {
+      updatePostData(formData);
+    } else {
+      addPostData(formData);
+    }
+  };
+
+  // New deletion handler: updates local state immediately
+  const handleDelete = (id: number) => {
+    setPosts((prev) => prev.filter((post) => post.id !== id));
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  return (
+    <main>
+      <div>
+        {/* Pass the onSubmit, updateData, and setUpdateData props to ProjectForm */}
+        <ProjectForm onSubmit={handleSubmit} updateData={updateData} setUpdateData={setUpdateData} />
+      </div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 p-10 mt-10">
+        {posts.map((post: { id: number; title: string; body: string }) => (
+          <PostCard
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            body={post.body}
+            onEdit={setUpdateData}   // for editing
+            onDelete={handleDelete}  // for deletion
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        ))}
+      </div>
+    </main>
   );
 }
