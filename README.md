@@ -2,18 +2,20 @@
 
 A full-featured CRUD (Create, Read, Update, Delete) application built with Next.js, DaisyUI, React Hook Form, React Query, and Axios. This project demonstrates modern frontend development techniques using a glassmorphic design, responsive layout, and seamless API integration.
 
+**Live Demo:** [https://cruddaily.vercel.app/](https://cruddaily.vercel.app/)
+
 ## Features
 
 - **Modern UI/UX:**    
   - Smooth transitions and hover effects.  
   - Consistent dark theme with ice-blue accents.
-![UI/UX](assets/UI.png)
+  <a href="assets/UI.png"><img src="assets/UI.png" alt="UI/UX" width="500" height="500" /></a>
 
 
 - **Responsive Layout:**  
   - Fixed left sidebar for the project form on larger screens.  
   - Designed for users on small screens.
-![Responsive](assets/Responsive.png)
+<a href="assets/Responsive.png"><img src="assets/Responsive.png" alt="Responsive" width="500" height="500" /></a>
 
 - **CRUD Operations:**  
   - **Create:** Add new posts via a stylish form.  
@@ -23,7 +25,8 @@ A full-featured CRUD (Create, Read, Update, Delete) application built with Next.
 
 - **Pagination:**  
   - Custom pagination that displays the current page and the next two pages.
-![Pagination](assets/Pagination.png)
+<a href="assets/Pagination.png"><img src="assets/Pagination.png" alt="Pagination" width="500" height="500" /></a>
+
 
 ## Technologies Used
 
