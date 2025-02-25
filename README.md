@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CRUD Application
 
-## Getting Started
+A full-featured CRUD (Create, Read, Update, Delete) application built with Next.js, DaisyUI, React Hook Form, React Query, and Axios. This project demonstrates modern frontend development techniques using a glassmorphic design, responsive layout, and seamless API integration.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Responsive Layout:**  
+  - Fixed left sidebar for the project form on larger screens.  
+  - Designed for users on small screens.
+
+- **CRUD Operations:**  
+  - **Create:** Add new posts via a stylish form.  
+  - **Read:** Fetch posts from an API and display them.  
+  - **Update:** Edit existing posts inline.  
+  - **Delete:** Remove posts instantly with live updates.
+
+- **Pagination:**  
+  - Custom pagination that displays the current page and the next two pages.
+
+- **Modern UI/UX:**    
+  - Smooth transitions and hover effects.  
+  - Consistent dark theme with ice-blue accents.
+
+## Technologies Used
+
+- **[Next.js](https://nextjs.org/):**  
+  React framework for server-rendered applications.
+  
+- **[DaisyUI](https://daisyui.com/):**  
+  Tailwind CSS component library for building beautiful UI components.
+  
+- **[React Hook Form](https://react-hook-form.com/):**  
+  Simple, performant, and flexible form library for React.
+  
+- **[React Query](https://react-query.tanstack.com/):**  
+  Data-fetching library for managing asynchronous operations and caching.
+  
+- **[Axios](https://axios-http.com/):**  
+  Promise-based HTTP client for making API requests.
+
+## Installation
+
+Follow these steps to set up the project:
+
+### 1. Clone the Repository
+```sh
+git clone https://github.com/your-repo-url.git
+cd your-repo-folder
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Using npm:
+```sh
+npm install next daisyui react-hook-form @tanstack/react-query axios
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Using yarn:
+```sh
+yarn add next daisyui react-hook-form @tanstack/react-query axios
+```
 
-## Learn More
+### 3. Running the Application
 
-To learn more about Next.js, take a look at the following resources:
+Using npm:
+```sh
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Using yarn:
+```sh
+yarn dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The application will now be running at [http://localhost:3000](http://localhost:3000).
 
-## Deploy on Vercel
+## How to Use
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Add a new post using the form.  
+2. Edit an existing post by clicking the edit button.  
+3. Delete a post using the delete button.  
+4. Navigate through posts using the pagination component.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+```
+/src/components   - Contains reusable components like NavBar, PostCard, ProjectForm, Pagination, etc.
+/src/api         - Contains API utility functions (e.g., Axios setup and CRUD API calls).
+tailwind.config.ts - Tailwind CSS configuration with DaisyUI and custom extensions.
+
+
+---
+
+Made By Arjun Bothra
