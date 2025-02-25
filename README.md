@@ -9,13 +9,19 @@ A full-featured CRUD (Create, Read, Update, Delete) application built with Next.
 - **Modern UI/UX:**    
   - Smooth transitions and hover effects.  
   - Consistent dark theme with ice-blue accents.
-  <a href="assets/UI.png"><img src="assets/UI.png" alt="UI/UX" width="500" height="500" /></a>
+    <div align="center">
+     <a href="assets/UI.png"><img src="assets/UI.png" alt="UI/UX" width="500" height="300" /></a>
+    </div> 
+  
 
 
 - **Responsive Layout:**  
   - Fixed left sidebar for the project form on larger screens.  
   - Designed for users on small screens.
-<a href="assets/Responsive.png"><img src="assets/Responsive.png" alt="Responsive" width="500" height="500" /></a>
+    <div>
+     <a href="assets/Responsive.png"><img src="assets/Responsive.png" alt="Responsive" width="300" height="500" /></a>
+    </div>
+
 
 - **CRUD Operations:**  
   - **Create:** Add new posts via a stylish form.  
@@ -25,7 +31,10 @@ A full-featured CRUD (Create, Read, Update, Delete) application built with Next.
 
 - **Pagination:**  
   - Custom pagination that displays the current page and the next two pages.
-<a href="assets/Pagination.png"><img src="assets/Pagination.png" alt="Pagination" width="500" height="500" /></a>
+    <div>
+     <a href="assets/Pagination.png"><img src="assets/Pagination.png" alt="Pagination" width="800" height="200" /></a>
+    </div>
+
 
 
 ## Technologies Used
