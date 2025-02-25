@@ -88,7 +88,3 @@ The application will now be running at [http://localhost:3000](http://localhost:
 /src/api         - Contains API utility functions (e.g., Axios setup and CRUD API calls).
 tailwind.config.ts - Tailwind CSS configuration with DaisyUI and custom extensions.
 
-
----
-
-Made By Arjun Bothra
