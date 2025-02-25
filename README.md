@@ -1,8 +1,8 @@
 # CRUD Application
-
+ [**Live Demo**](https://cruddaily.vercel.app/)
+ 
 A full-featured CRUD (Create, Read, Update, Delete) application built with Next.js, DaisyUI, React Hook Form, React Query, and Axios. This project demonstrates modern frontend development techniques using a glassmorphic design, responsive layout, and seamless API integration.
 
-**Live Demo:** [https://cruddaily.vercel.app/](https://cruddaily.vercel.app/)
 
 ## Features
 
