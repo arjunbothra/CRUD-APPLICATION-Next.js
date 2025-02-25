@@ -90,7 +90,7 @@ export default function Home() {
   <NavBar />
 
   {/* Responsive */}
-  <div className="block md:hidden p-4 mt-20">
+  <div className="block pt-20 md:hidden p-4 mt-20">
     <ProjectForm
       onSubmit={handleSubmit}
       updateData={updateData}
