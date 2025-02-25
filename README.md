@@ -4,9 +4,16 @@ A full-featured CRUD (Create, Read, Update, Delete) application built with Next.
 
 ## Features
 
+- **Modern UI/UX:**    
+  - Smooth transitions and hover effects.  
+  - Consistent dark theme with ice-blue accents.
+![UI/UX](assets/UI.png)
+
+
 - **Responsive Layout:**  
   - Fixed left sidebar for the project form on larger screens.  
   - Designed for users on small screens.
+![Responsive](assets/Responsive.png)
 
 - **CRUD Operations:**  
   - **Create:** Add new posts via a stylish form.  
@@ -16,10 +23,7 @@ A full-featured CRUD (Create, Read, Update, Delete) application built with Next.
 
 - **Pagination:**  
   - Custom pagination that displays the current page and the next two pages.
-
-- **Modern UI/UX:**    
-  - Smooth transitions and hover effects.  
-  - Consistent dark theme with ice-blue accents.
+![Pagination](assets/Pagination.png)
 
 ## Technologies Used
 
