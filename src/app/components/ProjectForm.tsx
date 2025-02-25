@@ -91,7 +91,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onSubmit, updateData, setUpda
     <div className="mt-auto flex justify-center">
       <button
         type="submit"
-        className="w-[90%] py-2 bg-white/80 border font-semibold 
+        className="w-[90%] py-2 bg-white border font-semibold 
         border-black text-black rounded-md hover:bg-white/80 
         hover:text-black hover:font-semibold transition-colors duration-300"
       >

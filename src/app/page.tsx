@@ -1,13 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import NavBar from "./components/NavBar";
 import PostCard from "./components/PostCard";
 import ProjectForm from "./components/ProjectForm";
 import { postData } from "@/api/PostApi";
+import Pagination from "./components/Pagination";
 
 export default function Home() {
+  const[page, setPage]=useState(1);
   const [posts, setPosts] = useState<any[]>([]);
   const [updateData, setUpdateData] = useState<{ id: number; title: string; body: string } | null>(null);
 
@@ -20,6 +22,7 @@ export default function Home() {
     },
   });
 
+ 
   useEffect(() => {
     if (data) {
       setPosts(data);
@@ -69,6 +72,15 @@ export default function Home() {
     setPosts((prev) => prev.filter((post) => post.id !== id));
   };
 
+// Pagination
+ const totalPages = Math.ceil(posts.length / 24);
+ 
+ const paginatedPosts = useMemo(() => {
+   const startIndex = (page - 1) * 24;
+   return posts.slice(startIndex, startIndex + 24);
+ }, [posts, page]);
+ 
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
@@ -106,7 +118,8 @@ export default function Home() {
       <h2 className="col-span-full text-3xl font-montserrat font-bold text-white mb-6">
         Posts
       </h2>
-      {posts.map((post: { id: number; title: string; body: string }) => (
+      {/* Cards */}
+      {posts.slice(page*24-24,page*24).map((post: { id: number; title: string; body: string }) => (
         <PostCard
           key={post.id}
           id={post.id}
@@ -117,7 +130,20 @@ export default function Home() {
         />
       ))}
     </div>
+    
   </div>
+
+  {/* Pagination */}
+  {posts.length > 0 && 
+  <div className="flex justify-center my-5 mx-1">
+    <Pagination
+      currentPage={page}
+      totalPages={totalPages}
+      onPageChange={setPage}
+    />
+  </div>
+}
+
 </div>
 
   );
