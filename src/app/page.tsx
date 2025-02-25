@@ -1,15 +1,16 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import NavBar from "./components/NavBar";
 import PostCard from "./components/PostCard";
 import ProjectForm from "./components/ProjectForm";
 import { postData } from "@/api/PostApi";
 
 export default function Home() {
-  const queryClient = useQueryClient();
+  const [posts, setPosts] = useState<any[]>([]);
+  const [updateData, setUpdateData] = useState<{ id: number; title: string; body: string } | null>(null);
 
-  // Fetch posts using React Query
   const { data, isLoading, error } = useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
@@ -19,22 +20,19 @@ export default function Home() {
     },
   });
 
-  const [posts, setPosts] = useState<any[]>([]);
-  // State for the post that is being edited
-  const [updateData, setUpdateData] = useState<{ id: number; title: string; body: string } | null>(null);
-
   useEffect(() => {
     if (data) {
       setPosts(data);
     }
   }, [data]);
 
-  // Function to add a new post
+  // New Post
   const addPostData = async (newPost: { title: string; body: string }) => {
     try {
       const res = await postData(newPost);
       if (res.status === 201) {
-        const uniqueId = posts.length > 0 ? Math.max(...posts.map((p: any) => p.id)) + 1 : 101;
+        const uniqueId =
+          posts.length > 0 ? Math.max(...posts.map((p: any) => p.id)) + 1 : 101;
         const postWithUniqueId = { ...res.data, id: uniqueId };
         setPosts([postWithUniqueId, ...posts]);
       }
@@ -43,19 +41,21 @@ export default function Home() {
     }
   };
 
-  // Function to update an existing post in local state (for edit)
+  // Update Function
   const updatePostData = (updatedPost: { title: string; body: string }) => {
     if (updateData) {
       setPosts(
         posts.map((post) =>
-          post.id === updateData.id ? { ...post, title: updatedPost.title, body: updatedPost.body } : post
+          post.id === updateData.id
+            ? { ...post, title: updatedPost.title, body: updatedPost.body }
+            : post
         )
       );
       setUpdateData(null);
     }
   };
 
-  // Handle form submission: if updateData exists, update post; otherwise, add a new post.
+  // Submit Function
   const handleSubmit = (formData: { title: string; body: string }) => {
     if (updateData) {
       updatePostData(formData);
@@ -64,7 +64,7 @@ export default function Home() {
     }
   };
 
-  // New deletion handler: updates local state immediately
+  // Delete Function
   const handleDelete = (id: number) => {
     setPosts((prev) => prev.filter((post) => post.id !== id));
   };
@@ -73,23 +73,52 @@ export default function Home() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <main>
-      <div>
-        {/* Pass the onSubmit, updateData, and setUpdateData props to ProjectForm */}
-        <ProjectForm onSubmit={handleSubmit} updateData={updateData} setUpdateData={setUpdateData} />
+    <div className="relative">
+  {/* NavBar */}
+  <NavBar />
+
+  {/* Responsive */}
+  <div className="block md:hidden p-4 mt-20">
+    <ProjectForm
+      onSubmit={handleSubmit}
+      updateData={updateData}
+      setUpdateData={setUpdateData}
+    />
+  </div>
+
+  {/* Left */}
+  <div className="hidden md:block fixed top-0 left-0 h-screen w-[25%] p-4 overflow-y-auto bg-transparent">
+    <div className="flex h-full items-start justify-center">
+      <div className="w-full mt-[30%]">
+        <ProjectForm
+          onSubmit={handleSubmit}
+          updateData={updateData}
+          setUpdateData={setUpdateData}
+        />
       </div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 p-10 mt-10">
-        {posts.map((post: { id: number; title: string; body: string }) => (
-          <PostCard
-            key={post.id}
-            id={post.id}
-            title={post.title}
-            body={post.body}
-            onEdit={setUpdateData}   // for editing
-            onDelete={handleDelete}  // for deletion
-          />
-        ))}
-      </div>
-    </main>
+    </div>
+  </div>
+
+  {/* Right Content*/}
+  <div className="ml-0 md:ml-[25%] w-full md:w-[75%] bg-transparent pt-24">
+    <div className="p-8 mt-3 grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+      {/* Heading */}
+      <h2 className="col-span-full text-3xl font-montserrat font-bold text-white mb-6">
+        Posts
+      </h2>
+      {posts.map((post: { id: number; title: string; body: string }) => (
+        <PostCard
+          key={post.id}
+          id={post.id}
+          title={post.title}
+          body={post.body}
+          onEdit={setUpdateData}
+          onDelete={handleDelete}
+        />
+      ))}
+    </div>
+  </div>
+</div>
+
   );
 }

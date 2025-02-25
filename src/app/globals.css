@@ -119,3 +119,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+body {
+  @apply bg-white ;
+}
